@@ -127,7 +127,7 @@
       </tbody>
     </table>
     
-    <p>For intensity prediction, models trained on balanced data yield lower Micro MSE across all backbones. MentalRoBERTa-base achieves optimal performance on balanced data (Initial: 0.8318, Final: 0.9054, Change: 1.0647). This improvement stems from the data augmentation strategy, which preserves critical initial and final seeker utterances while balancing emotion type and intensity distributions. The retained temporal dialogue structure enhances regressor performance, indicating that our augmentation method preferentially supports intensity prediction over classification tasks. However, for classification, multitask models trained on balanced data resulted in worse Macro F1 scores.</p>
+    <p>For intensity prediction, models trained on balanced data yield lower Micro MSE across all backbones. However, for classification, multitask models trained on balanced data resulted in worse Macro F1 scores. MentalRoBERTa-base achieves optimal performance on balanced data (Micro F1: 0.5274 Initial: 0.8318, Final: 0.9054, Change: 1.0647). The improvement in intensity level MSE scores stems from the data augmentation strategy, which preserves critical initial and final seeker utterances while balancing emotion type and intensity distributions. The retained temporal dialogue structure enhances regressor performance, indicating that our augmentation method preferentially supports intensity prediction over classification tasks.</p>
   </section>
 
 
