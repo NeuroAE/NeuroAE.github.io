@@ -21,53 +21,111 @@
     <h2>Data Augmentation</h2>
     <p>To enhance the diversity and quantity of training samples while balancing label distributions, data augmentation techniques were applied to both the SAD and ESConv datasets. For the SAD dataset, random percentages of text were trimmed from the beginning and end of each sample to generate 1,500 instances per stressor label. For the ESConv dataset, the first and final help-seeker utterances were retained, followed by the random selection of a variable number of intermediate utterances from the dialogue’s middle section; these components were concatenated to form 1,500 augmented samples per emotion type label. Identical augmentation procedures were applied uniformly to the training data for both classification-only and multitask learning models, ensuring methodological consistency across experimental conditions.</p>
     <h3>Results on SAD: Classification-Only</h3>
+
+    <table>
+      <caption>Classification model experiments performed on SAD with balanced training data.</caption>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>F1</th>
+          <th>Recall</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MentalRoBERTa-base</td>
+          <td>0.6214</td>
+          <td>0.6346</td>
+        </tr>
+        <tr>
+          <td>MentalBERT-base</td>
+          <td><strong>0.6285</strong></td>
+          <td>0.6382</td>
+        </tr>
+        <tr>
+          <td>ModernBERT-base</td>
+          <td>0.6215</td>
+          <td>0.6302</td>
+        </tr>
+      </tbody>
+    </table>
     
-    <p>Notably, data augmentation shifted optimal performance to MentalBERT-base (Macro F1: 0.6293) on balanced data. However, all models underperformed on augmented versus original training data. This degradation likely stems from the SAD dataset’s short text length: excessive truncation during balancing diluted sentiment signals, hindering effective learning.</p>
+    <p>Notably, data augmentation shifted optimal performance to MentalBERT-base (Micro F1: 0.6285) on balanced data. However, all models underperformed on augmented versus original training data. This degradation likely stems from the SAD dataset’s short text length: excessive truncation during balancing diluted sentiment signals, hindering effective learning.</p>
     <h3>Results on ESConv: Classification-Only</h3>
-    
-    <p>Notably, label balancing improved performance for all backbones on ESConv--contrasting with SAD dataset findings. This discrepancy likely stems from ESConv dialogues' inherent complexity and greater informational density: their extended length preserves informative content during augmentation, enabling effective data balancing without sacrificing contextual richness.</p>
-      <table>
-    <thead>
-      <tr>
-        <th rowspan="2">Model</th>
-        <th rowspan="2">F1</th>
-        <th rowspan="2">Recall</th>
-        <th colspan="3">Intensity MSE</th>
-      </tr>
-      <tr>
-        <th>Initial</th>
-        <th>Final</th>
-        <th>Change</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>MentalRoBERTa</td>
-        <td><strong>0.6279</strong></td>
-        <td>0.6318</td>
-        <td>1.4290</td>
-        <td>1.0760</td>
-        <td><strong>1.0700</strong></td>
-      </tr>
-      <tr>
-        <td>MentalBERT</td>
-        <td>0.5745</td>
-        <td>0.5775</td>
-        <td>1.6874</td>
-        <td>1.4091</td>
-        <td>1.3838</td>
-      </tr>
-      <tr>
-        <td>ModernBERT</td>
-        <td>0.5112</td>
-        <td>0.5116</td>
-        <td><strong>1.3074</strong></td>
-        <td><strong>1.0467</strong></td>
-        <td>1.0771</td>
-      </tr>
-    </tbody>
-  </table>
+
+    <table>
+      <caption>Classification model experiments performed on ESConv with balanced training data.</caption>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>F1</th>
+          <th>Recall</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MentalRoBERTa-base</td>
+          <td>0.5234</td>
+          <td>0.5233</td>
+        </tr>
+        <tr>
+          <td>MentalBERT-base</td>
+          <td>0.5271</td>
+          <td>0.5271</td>
+        </tr>
+        <tr>
+          <td>ModernBERT-base</td>
+          <td><strong>0.5543</strong></td>
+          <td>0.5543</td>
+        </tr>
+      </tbody>
+    </table>
+
+<!--     <p>Notably, label worsened performance for all backbones on ESConv--contrasting with SAD dataset findings. This discrepancy likely stems from ESConv dialogues' inherent complexity and greater informational density: their extended length preserves informative content during augmentation, enabling effective data balancing without sacrificing contextual richness.</p> -->
+
     <h3>Results on ESConv: Multi-Task</h3>
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">Model</th>
+          <th rowspan="2">F1</th>
+          <th rowspan="2">Recall</th>
+          <th colspan="3">Intensity MSE</th>
+        </tr>
+        <tr>
+          <th>Initial</th>
+          <th>Final</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MentalRoBERTa</td>
+          <td><strong>0.5274</strong></td>
+          <td>0.5426</td>
+          <td><strong>0.8318</strong></td>
+          <td><strong>0.9054</strong></td>
+          <td><strong>1.0647</strong></td>
+        </tr>
+        <tr>
+          <td>MentalBERT</td>
+          <td>0.5493</td>
+          <td>0.5620</td>
+          <td>0.8770</td>
+          <td>1.0247</td>
+          <td>1.2215</td>
+        </tr>
+        <tr>
+          <td>ModernBERT</td>
+          <td>0.5057</td>
+          <td>0.5194</td>
+          <td>0.8975</td>
+          <td>0.9340</td>
+          <td>1.1050</td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p>For intensity prediction, models trained on balanced data yield lower Micro MSE across all backbones. MentalRoBERTa-base achieves optimal performance on balanced data (Initial: 0.8318, Final: 0.9054, Change: 1.0647). This improvement stems from the data augmentation strategy, which preserves critical initial and final seeker utterances while balancing emotion type and intensity distributions. The retained temporal dialogue structure enhances regressor performance, indicating that our augmentation method preferentially supports intensity prediction over classification tasks. However, for classification, multitask models trained on balanced data resulted in worse Macro F1 scores.</p>
   </section>
 
